@@ -9,6 +9,7 @@
 int main(int argc, char *argv[]) {
 	int exit = 0;
 	char *input;
+
 	clean_screen();
 
 	do {
