@@ -1,15 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "input.h"
+#include "dbg.h"
 
 char *get_input(FILE* file_input, size_t size) {
 	int character;
 	size_t len = 0;
-	char *str = malloc(sizeof(size));
+	char *str = realloc(NULL, sizeof(*str)*size);
 	if (!str) return str;
 	while (EOF != (character = fgetc(file_input)) && character != '\n') {
-		len++;
 		str[len] = character;
+		len++;
 		if (len == size) {
 			size += BUFFER_LENGTH;
 			str = realloc(str, sizeof(*str)*(size));
@@ -17,7 +18,7 @@ char *get_input(FILE* file_input, size_t size) {
 		}
 	}
 	len++;
-	str[len] ='\0';
+	str[len] = '\0';
 
 	return realloc(str, sizeof(*str)*len);
 }
