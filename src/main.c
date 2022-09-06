@@ -5,6 +5,7 @@
 #include "utils.h"
 #include "input.h"
 #include "parse.h"
+#include "program.h"
 
 
 int main() {
@@ -23,6 +24,10 @@ int main() {
 
 		} else {
 			struct word_command *commands = input_to_wc(input);
+			char path_program[1024];
+			search_program_path("ls", path_program);
+
+			printf("%s\n", path_program);
 			debug_wc(commands);
 			free_wc(&commands);
 		}

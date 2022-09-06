@@ -1,6 +1,8 @@
 #include <sys/types.h>
 #include <unistd.h>
+#include "parse.h"
 #include "dbg.h"
+
 
 int execute_command(char *path_to_program, char *arguments[]) {
 	pid_t forkres = fork();
@@ -18,4 +20,12 @@ int execute_command(char *path_to_program, char *arguments[]) {
 error:
 	log_err("An error occured while creating the child process");
 	return -1;
+}
+
+void execute_commands(struct word_command *head) {
+	struct word_command *current = head;
+
+	while (current != NULL) {
+
+	}
 }
