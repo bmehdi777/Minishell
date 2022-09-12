@@ -13,8 +13,11 @@ int search_in_folder(char *path, char *filename) {
 }
 
 void search_program_path(char *program_name, char *path_program) {
-	char *PATH = getenv("PATH");
-	char *folder_path = strtok(PATH, ":");
+	char *path_variable = getenv("PATH");
+	char *path = malloc(strlen(path_variable)+1);
+	strcpy(path, path_variable);
+
+	char *folder_path = strtok(path, ":");
 	char buffer[1024];
 	while (folder_path != NULL) {
 		strcat(buffer, folder_path);
@@ -22,9 +25,11 @@ void search_program_path(char *program_name, char *path_program) {
 		if(search_in_folder(buffer, program_name) == 1) {
 			// search_in_folder already concatenated the string
 			strcpy(path_program, buffer);
+			free(path);
 			return;
 		}
-		memset(buffer, 0,strlen(buffer));
+		memset(buffer, 0,strlen(buffer)+1);
 		folder_path = strtok(NULL, ":");
 	}
+	free(path);
 }
