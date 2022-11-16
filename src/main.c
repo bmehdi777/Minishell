@@ -18,16 +18,18 @@ int main() {
 	do {
 		input = get_input(stdin, BUFFER_LENGTH);
 
+		log_info("exit should : %i", strcmp(input, "exit"));
 		if (strcmp(input, "exit") == 0) {
 			exit = 1;
 		} else if (strcmp(input, "") == 0) {
 
 		} else {
-			struct word_command *commands = input_to_wc(input);
-			char path_program[1024];
-			search_program_path("ls", path_program);
+			char *tmp = malloc(strlen(input)+1);
+			strcpy(tmp, input);
+			struct word_command *commands = input_to_wc(tmp);
 
-			printf("%s\n", path_program);
+			log_info("%i", exit);
+			path_to_wc(commands);
 			debug_wc(commands);
 			free_wc(&commands);
 		}

@@ -32,4 +32,5 @@ void search_program_path(char *program_name, char *path_program) {
 		folder_path = strtok(NULL, ":");
 	}
 	free(path);
+	strcpy(path_program, "NULL");
 }

@@ -7,6 +7,7 @@ char *get_input(FILE* file_input, size_t size) {
 	int character;
 	size_t len = 0;
 	char *str = realloc(NULL, sizeof(*str)*size);
+
 	if (!str) return str;
 	while (EOF != (character = fgetc(file_input)) && character != '\n') {
 		str[len] = character;

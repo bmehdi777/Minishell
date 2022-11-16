@@ -10,12 +10,14 @@ struct word_args {
 };
 
 struct word_command {
-	char *command;
+	char command[5012];
+	char path_commands[2048];
 	struct word_args *w_args;
 	struct word_command *next;
 };
 
 struct word_command *input_to_wc(char *input);
+void path_to_wc(struct word_command *head);
 void debug_wc(struct word_command *head);
 void free_wc(struct word_command **head);
 

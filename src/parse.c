@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "parse.h"
+#include "program.h"
 #include "dbg.h"
 
 int special_char(char *input) {
@@ -25,13 +26,14 @@ struct word_command *input_to_wc(char *input) {
 	current->w_args = malloc(sizeof(struct word_args)+max_size_args);
 	current->w_args->size_args = 0;
 	
-	char *buffer_input = input;
+	char buffer_input[10000];
 	strcpy(buffer_input, input);
 	char *token = strtok(buffer_input, " ");
 
 	while (token != NULL) {
 		if (current->w_args->size_args == 0) {
-			current->command = token;
+			log_info("token : %s", token);
+			strcpy(current->command, token);
 		} else {
 			// special characters - other command
 			if (special_char(token) == 0) {
@@ -59,10 +61,19 @@ struct word_command *input_to_wc(char *input) {
 	return head;
 }
 
+void path_to_wc(struct word_command *head) {
+	struct word_command *current = head;
+	while (current != NULL) {
+		search_program_path(current->command, current->path_commands);
+		current = current->next;
+	}
+}
+
 void debug_wc(struct word_command *head) {
 	struct word_command *current = head;
 	while (current != NULL) {
 		log_info("Command : %s", current->command);
+		//log_info("Path : %s", current->path_commands);
 		log_info("Arguments : ");
 		for (size_t i = 0; i < current->w_args->size_args-1; i++) {
 			log_info("- %li : %s", i, current->w_args->args[i]);
